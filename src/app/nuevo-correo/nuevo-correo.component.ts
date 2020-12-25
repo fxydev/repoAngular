@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -11,6 +11,8 @@ export class NuevoCorreoComponent implements OnInit {
   nuevoCorreo: any;
   submitted = false;
   @Input() correo: any;
+  //se declara el evento
+  @Output() accionRealizada: EventEmitter<any> = new EventEmitter();
 
   constructor(private formBuilder: FormBuilder) { }
 
@@ -50,6 +52,7 @@ export class NuevoCorreoComponent implements OnInit {
   onReset() {
     this.submitted = false;
     this.nuevoCorreo.reset();
+    this.accionRealizada.emit();//el evento se produce cuando se llama a onReset
   }
 
 }

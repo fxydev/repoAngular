@@ -59,5 +59,10 @@ export class ListacorreoComponent implements OnInit {
     console.log(correo);
     correo.responder = !correo.responder;
   }
+//metodo que se ejecuta cuando se produce el evneto AccionRealizada 
+  accionRespuestaRapida(correo: any) {
+    correo.responder = false;
+    //pone responder a false para que se oculte
+  }
 
 }
