@@ -1,16 +1,30 @@
-<table>
+<table style="width:100%; border:1px solid black;">
     <tr>
         <th>Emisor</th>
         <th>Titulo</th>
         <th>Leido</th>
     </tr>
-    <tr *ngFor="let correo of correos">
+    <!--VERSION SIN RADIO BUTTON-->
+    <!--<tr *ngFor="let correo of correos">
         <td>{{correo.emisor}}</td>
         <td>{{correo.titulo}}</td>
         <td>
             <div *ngIf="correo.leido">Si</div>
             <div *ngIf="!correo.leido">No</div>
         </td>
+    </tr>-->
+    <!--VERSION CON RADIO BUTTON-->
+    <tr *ngFor="let correo of correos; index as i;">
+        <td>{{correo.emisor}}</td>
+        <td>{{correo.titulo}}</td>
+        <td>
+            <input type="radio" name="leido-{{i}}" value="si" [(ngModel)]="correo.leido" [value]=true> SI
+            <input type="radio" name="leido-{{i}}" value="no" [(ngModel)]="correo.leido" [value]=false> NO
+        </td>
     </tr>
 
 </table>
+<!--Mediante este codigo podemos comprobar como cuando cambio el valor del radiobutton, cambia tambien el del h3-->
+<h2>Estado de lectura del correo 1</h2>
+<h3 *ngIf="correos[0].leido">SI</h3>
+<h3 *ngIf="!correos[0].leido">NO</h3>
