@@ -1,0 +1,16 @@
+<table>
+    <tr>
+        <th>Emisor</th>
+        <th>Titulo</th>
+        <th>Leido</th>
+    </tr>
+    <tr *ngFor="let correo of correos">
+        <td>{{correo.emisor}}</td>
+        <td>{{correo.titulo}}</td>
+        <td>
+            <div *ngIf="correo.leido">Si</div>
+            <div *ngIf="!correo.leido">No</div>
+        </td>
+    </tr>
+
+</table>
