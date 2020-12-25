@@ -3,27 +3,38 @@
         <th>Emisor</th>
         <th>Titulo</th>
         <th>Leido</th>
-    </tr>
-    <!--VERSION SIN RADIO BUTTON-->
-    <!--<tr *ngFor="let correo of correos">
-        <td>{{correo.emisor}}</td>
-        <td>{{correo.titulo}}</td>
-        <td>
-            <div *ngIf="correo.leido">Si</div>
-            <div *ngIf="!correo.leido">No</div>
-        </td>
-    </tr>-->
-    <!--VERSION CON RADIO BUTTON-->
-    <tr *ngFor="let correo of correos; index as i;">
-        <td>{{correo.emisor}}</td>
-        <td>{{correo.titulo}}</td>
-        <td>
-            <input type="radio" name="leido-{{i}}" value="si" [(ngModel)]="correo.leido" [value]=true> SI
-            <input type="radio" name="leido-{{i}}" value="no" [(ngModel)]="correo.leido" [value]=false> NO
-        </td>
+        <th>Responder</th>
     </tr>
 
+    <ng-container *ngFor="let correo of correos; index as i;">
+    <tr>
+        <td>{{correo.emisor}}</td>
+        <td>{{correo.titulo}}</td>
+        <td>
+            <input type="radio" name="leido-{{i}}" value="si" [(ngModel)]="correo.leido" [value]=true disabled> SI
+            <input type="radio" name="leido-{{i}}" value="no" [(ngModel)]="correo.leido" [value]=false disabled> NO
+        </td>
+        <!--antes: El boton va cambiando la variable responder de true a false y de false a true-->
+        <!--<td><button (click)="responder = !responder">Responder</button></td>-->
+        <!--ahora: el metodo click responder recibe el correo por parametro. Su logica la sacamos fuera-->
+        <td>
+            <button (click)="clickResponder(correo)">Responder</button>
+        </td>
+    </tr>
+    <app-nuevo-correo *ngIf="correo.responder" [correo]="correo"></app-nuevo-correo>
+    </ng-container>
 </table>
+
+
+
+<!--El componente nuevo correo se mostrará si la variable responder es true-->
+<!--El componente nuevo correo recibe una variable titulo: 'A'-->
+<!--<app-nuevo-correo *ngIf="responder" correo="{titulo='A'}"></app-nuevo-correo>-->
+
+<!--Muevo el componente dentro de la tabla para generar un componente por cada elemento de la tabla en vez de uno único-->
+<!--<app-nuevo-correo *ngIf="responder" [correo]="correoAResponder"></app-nuevo-correo>-->
+
+
 <!--Mediante este codigo podemos comprobar como cuando cambio el valor del radiobutton, cambia tambien el del h3-->
 <h2>Estado de lectura del correo 1</h2>
 <h3 *ngIf="correos[0].leido">SI</h3>
