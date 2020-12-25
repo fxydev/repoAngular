@@ -53,12 +53,13 @@ export class ListacorreoComponent implements OnInit {
 
   ngOnInit() {}  
 
+  //este metodo cambia el valor de responder de true a false y de false a true
+  //de esta variable depende que se muestre el componente nuevocorreo
   clickResponder(correo: any) {
-    // this.responder = !this.responder;
-    // this.correoAResponder = correo;
     console.log(correo);
     correo.responder = !correo.responder;
   }
+
 //metodo que se ejecuta cuando se produce el evneto AccionRealizada 
   accionRespuestaRapida(correo: any) {
     correo.responder = false;

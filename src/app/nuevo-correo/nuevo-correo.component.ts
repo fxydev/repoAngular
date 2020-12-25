@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AvisosService } from 'src/app/avisos.service';
 
 @Component({
   selector: 'app-nuevo-correo',
@@ -10,12 +11,14 @@ export class NuevoCorreoComponent implements OnInit {
 
   nuevoCorreo: any;
   submitted = false;
+  //la variable correo proviene de fuera de esta clase, de ahi el @input
   @Input() correo: any;
-  //se declara el evento
+  //se declara el evento accionRealizada
   @Output() accionRealizada: EventEmitter<any> = new EventEmitter();
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private servicioAvisos: AvisosService) { }
 
+  //metodo que contiene los requisitos de  validacion del formulario
   ngOnInit() {
     this.nuevoCorreo = this.formBuilder.group({
       titulo: ['', [Validators.required, Validators.minLength(3)]],
@@ -33,7 +36,7 @@ export class NuevoCorreoComponent implements OnInit {
   }
 
   get formulario() { return this.nuevoCorreo.controls; }
-
+//metodo al que se accede cuando se da al boton de submit
   onSubmit() {
     this.submitted = true;
 
@@ -45,14 +48,20 @@ export class NuevoCorreoComponent implements OnInit {
     correo.leido = false;
     correo.emisor = 'correoEmisor1@openWebinar.inv';
 
-    alert("Correo Enviado \nEliminamos el formulario");
-    this.onReset();
+    this.onReset();//metodo para borrar los campos
+    this.servicioAvisos.showMenssage(`Correo enviado a ${correo.emisor}`);
   }
 
   onReset() {
     this.submitted = false;
     this.nuevoCorreo.reset();
     this.accionRealizada.emit();//el evento se produce cuando se llama a onReset
+  }
+  //metodo al que se accede cuando se presiona el boton cancelar
+  cancel(){
+    this.onReset();
+    //se llama al servicioAvisos para mostrar un mensaje
+    this.servicioAvisos.showMenssage("Envio Cancelado");
   }
 
 }
