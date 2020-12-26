@@ -14,17 +14,17 @@ export class LoginService {
   tokenUser: any;
   userId: any;
 
-  constructor(private googleAuthService: GoogleAuthService, private ngZone: NgZone) { 
+  constructor(public googleAuthService: GoogleAuthService, private ngZone: NgZone) { 
     if(this.isUserSignedIn()){
       this.setUser(this.getSessionUser());
     }
   }
 
-  private setUser(user: any){
-    this.profile = user['w3'];
-    this.tokenUser = user['Zi'].access_token;
-    this.userId = this.profile['Eea'];
-  }
+private setUser(user: any){
+    this.profile = user;
+    this.tokenUser = user.access_token;
+    this.userId = this.profile;
+}
 
   public getSessionUser(): GoogleUser {
     let user: any = sessionStorage.getItem(LoginService.SESSION_STORAGE_KEY);
@@ -37,8 +37,8 @@ export class LoginService {
   public signIn() {
     this.googleAuthService.getAuth().subscribe((auth:any) => {
       auth.signIn().then(
-        res => this.signInSuccessHandler(res),
-        err => this.signInErrorHandler(err));
+        (        res: any) => this.signInSuccessHandler(res),
+        (        err: any) => this.signInErrorHandler(err));
     });
   }
 
@@ -61,6 +61,7 @@ export class LoginService {
   }
 
   private signInSuccessHandler(res: GoogleUser) {
+    console.log('Sesion iniciada como '+res.toString());
     this.ngZone.run(() => {
       this.setUser(res);
       sessionStorage.setItem(
