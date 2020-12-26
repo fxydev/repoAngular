@@ -21,8 +21,8 @@ export class LoginService {
   }
 
 private setUser(user: any){
-    this.profile = user;
-    this.tokenUser = user.access_token;
+    this.profile = user.xt.du;
+    this.tokenUser = user.xc.access_token;
     this.userId = this.profile;
 }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AvisosService } from 'src/app/avisos.service';
+import { GmailService } from 'src/app/gmail.service';
 
 @Component({
   selector: 'app-nuevo-correo',
@@ -16,7 +17,7 @@ export class NuevoCorreoComponent implements OnInit {
   //se declara el evento accionRealizada
   @Output() accionRealizada: EventEmitter<any> = new EventEmitter();
 
-  constructor(private formBuilder: FormBuilder, private servicioAvisos: AvisosService) { }
+  constructor(private formBuilder: FormBuilder, private servicioAvisos: AvisosService,private gmail: GmailService) { }
 
   //metodo que contiene los requisitos de  validacion del formulario
   ngOnInit() {
@@ -45,11 +46,20 @@ export class NuevoCorreoComponent implements OnInit {
     }
 
     let correo = this.nuevoCorreo.value;
-    correo.leido = false;
-    correo.emisor = 'correoEmisor1@openWebinar.inv';
+    const texto = correo.cuerpo;
+    const destinatario = correo.destinatario;
+    const asunto = correo.titulo;
 
     this.onReset();//metodo para borrar los campos
-    this.servicioAvisos.showMenssage(`Correo enviado a ${correo.emisor}`);
+    this.gmail.sendMessage(texto, destinatario, asunto).subscribe(
+      (response : any) => {
+        console.log("respuesta envio", response);
+        this.servicioAvisos.showMenssage(`Correo enviado a ${correo.destinatario}`);
+      },
+      (error: any) => {
+        this.servicioAvisos.showMenssage(`Fallo en el envio`);
+      }
+    );
   }
 
   onReset() {

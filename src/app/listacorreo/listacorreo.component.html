@@ -2,7 +2,6 @@
     <tr>
         <th>Emisor</th>
         <th>Titulo</th>
-        <th>Leido</th>
         <th>Responder</th>
     </tr>
 
@@ -10,10 +9,7 @@
     <tr>
         <td>{{correo.emisor}}</td>
         <td>{{correo.titulo}}</td>
-        <td>
-            <input type="radio" name="leido-{{i}}" value="si" [(ngModel)]="correo.leido" [value]=true disabled> SI
-            <input type="radio" name="leido-{{i}}" value="no" [(ngModel)]="correo.leido" [value]=false disabled> NO
-        </td>
+       
         <!--antes: El boton va cambiando la variable responder de true a false y de false a true-->
         <!--<td><button (click)="responder = !responder">Responder</button></td>-->
         <!--ahora: el metodo click responder recibe el correo por parametro. Su logica la sacamos fuera-->
