@@ -1,31 +1,29 @@
 <table style="width:100%; border:1px solid black;">
-    <tr>
-        <th>Emisor</th>
-        <th>Titulo</th>
-        <th>Responder</th>
-    </tr>
+  <tr>
+      <th>Emisor</th>
+      <th>Titulo</th>
+      <th>Responder</th>
+  </tr>
 
-    <ng-container *ngFor="let correo of correos; index as i;">
-    <tr>
-        <td>{{correo.emisor}}</td>
-        <td>{{correo.titulo}}</td>
-       
-        <!--antes: El boton va cambiando la variable responder de true a false y de false a true-->
-        <!--<td><button (click)="responder = !responder">Responder</button></td>-->
-        <!--ahora: el metodo click responder recibe el correo por parametro. Su logica la sacamos fuera-->
-        <td>
-            <button (click)="verDetalle(correo)">Ver</button>
-            <button (click)="clickResponder(correo)">Responder</button>
-        </td>
-    </tr>
-        <tr *ngIf="correo.responder">
-            <!--Declaramos el evento accionRealizada y el metodo que se ejecuta cuando se produce-->
-            <app-nuevo-correo [correo]="correo" (accionRealizada)="accionRespuestaRapida(correo)"></app-nuevo-correo>
-        </tr>
-    </ng-container>
+  <ng-container *ngFor="let correo of correos; index as i;">
+  <tr>
+      <td>{{correo.emisor}}</td>
+      <td>{{correo.titulo}}</td>
+     
+      <!--antes: El boton va cambiando la variable responder de true a false y de false a true-->
+      <!--<td><button (click)="responder = !responder">Responder</button></td>-->
+      <!--ahora: el metodo click responder recibe el correo por parametro. Su logica la sacamos fuera-->
+      <td>
+          <button (click)="verDetalle(correo)">Ver</button>
+          <button (click)="clickResponder(correo)">Responder</button>
+      </td>
+  </tr>
+      <tr *ngIf="correo.responder">
+          <!--Declaramos el evento accionRealizada y el metodo que se ejecuta cuando se produce-->
+          <app-nuevo-correo [correo]="correo" (accionRealizada)="accionRespuestaRapida(correo)"></app-nuevo-correo>
+      </tr>
+  </ng-container>
 </table>
-
-
 
 <!--El componente nuevo correo se mostrará si la variable responder es true-->
 <!--El componente nuevo correo recibe una variable titulo: 'A'-->

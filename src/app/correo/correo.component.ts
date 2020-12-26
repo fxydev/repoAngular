@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Correo } from 'src/app/correo/correo.component';
 
 @Component({
   selector: 'app-correo',
@@ -7,22 +8,24 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./correo.component.scss']
 })
 export class CorreoComponent implements OnInit {
-  
-  correo: any;
-  constructor(private route: ActivatedRoute) { 
 
+  correo: Correo;
+
+  constructor(private route: ActivatedRoute) { 
     this.correo = {
+      id: "",
       titulo: "",
       cuerpo: "",
       emisor: ""
-    }	    
-  }	  
+    }
+  }
 
-  
-
-  ngOnInit(): void {
+  ngOnInit() {
     const datosRecibidos = this.route.snapshot.paramMap.get('correo');
-    this.correo = JSON.parse(datosRecibidos);
+    if(datosRecibidos){
+      this.correo = JSON.parse(datosRecibidos);
+    }
+   
   }
 
 }
