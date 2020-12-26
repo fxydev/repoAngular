@@ -26,6 +26,7 @@ export class GmailService {
 
     return this.http.get(url, { headers:headers, params: params } );
   };
+  
   public sendMessage =  (text: string, to: string, subject: string) =>{
     const url = "https://www.googleapis.com/gmail/v1/users/"+this.login.userId+"/messages/send";
     const authToken = this.login.tokenUser;
@@ -37,8 +38,8 @@ export class GmailService {
 
     const emailTemplate = 
       "Content-Type:  text/plain; charset=\"UTF-8\"\nContent-length: 5000\nContent-Transfer-Encoding: message/rfc2822\n" +
-      `to: ${to}\n`+
-      `subject: ${subject}\n\n`+
+      `To: ${to}\n`+
+      `Subject: ${subject}\n\n`+
       `${text}`;
     const base64EncodedEmail = btoa(emailTemplate).replace(/\+/g, '-').replace(/\//g, '_');
 
